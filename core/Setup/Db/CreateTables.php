@@ -34,7 +34,7 @@ class CreateTables
             ->exec(<<<SQL
 CREATE TABLE `subscribers` (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `email` VARCHAR(255) NOT NULL,
+    `email` VARCHAR(255) NOT NULL UNIQUE,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
 SQL);
@@ -42,7 +42,7 @@ SQL);
             ->exec(<<<SQL
 CREATE TABLE `cache` (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `key` VARCHAR(255) NOT NULL,
+    `key` VARCHAR(255) NOT NULL UNIQUE,
     `value` TEXT NOT NULL,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )

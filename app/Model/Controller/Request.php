@@ -42,4 +42,12 @@ class Request
 
         return $this->method;
     }
+
+    /**
+     * @return array
+     */
+    public function getPostParams(): array
+    {
+        return $_POST;
+    }
 }
