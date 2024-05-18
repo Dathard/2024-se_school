@@ -1,33 +1,24 @@
 #!/usr/bin/env php
 <?php
-
-require_once(__DIR__.'/../vendor/autoload.php');
+require __DIR__ . '/../app/bootstrap.php';
 
 if ('cli' !== PHP_SAPI) {
-    echo 'bin/* must be run as a CLI application';
-    exit(1);
+    throw new \Exception('bin/* must be run as a CLI application');
 }
 
 unset($argv[0]);
 
-$objectManager = new App\Core\ObjectManager();
+$objectManager = new \Core\ObjectManager();
 $commandName = array_shift($argv);
-/** @var \App\Model\Cli\AbstractCommand $command */
-$command = $objectManager->get("App\\Model\\Cli\\Command\\".ucfirst($commandName));
+/** @var \Core\Cli\CommandInterface $command */
+$command = $objectManager->get("Core\\Cli\\Command\\".ucfirst($commandName));
 
 if (! $command) {
-    echo 'The command is not valid. Please check it and try again.';
-    exit(1);
+    throw new \Exception('The command is not valid. Please check it and try again.');
 }
 
-/** @var App\Model\Cli\ParamsParser $paramsParser */
-$paramsParser = $objectManager->get(\App\Model\Cli\ParamsParser::class);
-
-try {
-    $params = $paramsParser->execute($argv);
-} catch (Exception $e) {
-    echo $e->getMessage();
-    exit(1);
-}
+/** @var \Core\Cli\ParamsParser $paramsParser */
+$paramsParser = $objectManager->get(\Core\Cli\ParamsParser::class);
+$params = $paramsParser->execute($argv);
 
 $command->execute($params);

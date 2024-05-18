@@ -2,16 +2,46 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Cli\Command;
+namespace Core\Cli\Command;
 
-use App\Model\Cli\AbstractCommand;
+use Core\Cli\CommandInterface;
 
-class Install extends AbstractCommand
+class Install implements CommandInterface
 {
     public const CLI_PARAMETER_DB_HOST = 'db-host';
     public const CLI_PARAMETER_DB_NAME = 'db-name';
     public const CLI_PARAMETER_DB_USER = 'db-user';
     public const CLI_PARAMETER_DB_PASSWORD = 'db-password';
+
+    /**
+     * @var \App\Model\Db\CheckConnection
+     */
+    private $checkDbConnection;
+
+    /**
+     * @var \Core\Setup\Db\CreateTables
+     */
+    private $createDbTables;
+
+    /**
+     * @var \Core\Setup\CreateConfig
+     */
+    private $createConfig;
+
+    /**
+     * @param \App\Model\Db\CheckConnection $checkDbConnection
+     * @param \Core\Setup\Db\CreateTables $createDbTables
+     * @param \Core\Setup\CreateConfig $createConfig
+     */
+    public function __construct(
+        \App\Model\Db\CheckConnection $checkDbConnection,
+        \Core\Setup\Db\CreateTables $createDbTables,
+        \Core\Setup\CreateConfig $createConfig
+    ) {
+        $this->checkDbConnection = $checkDbConnection;
+        $this->createDbTables = $createDbTables;
+        $this->createConfig = $createConfig;
+    }
 
     /**
      * @param array $params
@@ -20,15 +50,22 @@ class Install extends AbstractCommand
      */
     public function execute(array $params)
     {
-        if (in_array(AbstractCommand::CLI_PARAMETER_HELP, $params)) {
+        if (in_array(CommandInterface::CLI_PARAMETER_HELP, $params)) {
             print_r($this->help());
             exit(0);
         }
 
         $this->validate($params);
 
+        $this->checkDbConnection->execute(
+            $params[self::CLI_PARAMETER_DB_HOST],
+            $params[self::CLI_PARAMETER_DB_USER],
+            $params[self::CLI_PARAMETER_DB_PASSWORD],
+            $params[self::CLI_PARAMETER_DB_NAME]
+        );
 
-        // TODO: Create database ...
+        $this->createConfig->execute($this->prepareConfig($params));
+        $this->createDbTables->execute();
     }
 
     /**
@@ -98,5 +135,21 @@ class Install extends AbstractCommand
                 print_r($this->help(), true)
             );
         }
+    }
+
+    /**
+     * @param array $params
+     * @return array[]
+     */
+    private function prepareConfig(array $params): array
+    {
+        return [
+            'db' => [
+                'host' => $params[self::CLI_PARAMETER_DB_HOST],
+                'user' => $params[self::CLI_PARAMETER_DB_USER],
+                'password' => $params[self::CLI_PARAMETER_DB_PASSWORD],
+                'dbname' => $params[self::CLI_PARAMETER_DB_NAME]
+            ]
+        ];
     }
 }

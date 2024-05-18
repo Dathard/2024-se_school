@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Cli;
+namespace Core\Cli;
 
 class ParamsParser
 {
@@ -16,8 +16,8 @@ class ParamsParser
         $result = [];
 
         foreach ($params as $param) {
-            if (preg_match('/^--'. AbstractCommand::CLI_PARAMETER_HELP.'$/', $param)) {
-                $result[AbstractCommand::CLI_PARAMETER_HELP] = true;
+            if (preg_match('/^--'. CommandInterface::CLI_PARAMETER_HELP.'$/', $param)) {
+                $result[CommandInterface::CLI_PARAMETER_HELP] = true;
                 continue;
             }
 

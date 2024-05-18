@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="routes">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="route" type="routeDeclaration" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="routeDeclaration">
+        <xs:sequence>
+            <xs:element name="service" type="serviceDeclaration" minOccurs="1" maxOccurs="1" />
+        </xs:sequence>
+        <xs:attribute name="url" type="xs:string" use="required" />
+        <xs:attribute name="method" type="xs:string" use="required" />
+    </xs:complexType>
+
+    <xs:complexType name="serviceDeclaration">
+        <xs:attribute name="class" type="xs:string" use="required" />
+        <xs:attribute name="method" type="xs:string" use="required" />
+    </xs:complexType>
+</xs:schema>

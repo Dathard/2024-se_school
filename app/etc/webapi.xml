@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/webapi.xsd">
+    <route url="/rate"  method="GET">
+        <service class="App\Api\Rate" method="get"/>
+    </route>
+    <route url="/subscribe"  method="POST">
+        <service class="App\Api\Subscribe" method="execute"/>
+    </route>
+</routes>

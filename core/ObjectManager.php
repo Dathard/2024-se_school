@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core;
+namespace Core;
 
 class ObjectManager
 {
@@ -21,27 +21,24 @@ class ObjectManager
     /**
      * @param $type
      * @return bool|Object
+     * @throws \ReflectionException
      */
     public function create(string $type)
     {
-        try {
-            $reflection = new \ReflectionClass($type);
+        $reflection = new \ReflectionClass($type);
 
-            $constructor = $reflection->getConstructor();
+        $constructor = $reflection->getConstructor();
 
-            $params = [];
-            if ($constructor) {
-                foreach ($constructor->getParameters() as $parameter) {
-                    $params[$parameter->getName()] = [
-                        'class' => $parameter->getClass() ? $parameter->getClass()->getName() : false,
-                        'value' => $parameter->isOptional() ? $parameter->getDefaultValue() : false,
-                    ];
-                }
-
-                $params = $this->resolveArguments($params);
+        $params = [];
+        if ($constructor) {
+            foreach ($constructor->getParameters() as $parameter) {
+                $params[$parameter->getName()] = [
+                    'class' => $parameter->getClass() ? $parameter->getClass()->getName() : false,
+                    'value' => $parameter->isOptional() ? $parameter->getDefaultValue() : false,
+                ];
             }
-        } catch (\ReflectionException $e) {
-            return false;
+
+            $params = $this->resolveArguments($params);
         }
 
         if ($reflection->hasMethod('getInstance')) {
@@ -54,6 +51,7 @@ class ObjectManager
     /**
      * @param string $type
      * @return mixed
+     * @throws \ReflectionException
      */
     public function get(string $type)
     {
@@ -67,6 +65,7 @@ class ObjectManager
     /**
      * @param array $params
      * @return array
+     * @throws \ReflectionException
      */
     private function resolveArguments(array $params): array
     {
