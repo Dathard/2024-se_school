@@ -11,6 +11,4 @@ interface CommandInterface
      * @return mixed
      */
     public function execute(array $params);
-
-    public function help();
 }

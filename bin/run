@@ -9,16 +9,8 @@ if ('cli' !== PHP_SAPI) {
 unset($argv[0]);
 
 $objectManager = new \Core\ObjectManager();
-$commandName = array_shift($argv);
-/** @var \Core\Cli\CommandInterface $command */
-$command = $objectManager->get("Core\\Cli\\Command\\".ucfirst($commandName));
-
-if (! $command) {
-    throw new \Exception('The command is not valid. Please check it and try again.');
-}
-
-/** @var \Core\Cli\ParamsParser $paramsParser */
-$paramsParser = $objectManager->get(\Core\Cli\ParamsParser::class);
-$params = $paramsParser->execute($argv);
-
-$command->execute($params);
+$objectManager->get(\Core\Cli\Runner::class)
+    ->run(
+        array_shift($argv),
+        $argv
+    );

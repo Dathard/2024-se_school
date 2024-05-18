@@ -21,6 +21,16 @@ class SubscriptionRepository
     }
 
     /**
+     * @return array
+     */
+    public function getList(): array
+    {
+        return $this->dbConnection->get()
+            ->query("SELECT * FROM `subscribers`")
+            ->fetchAll();
+    }
+
+    /**
      * @param string $email
      * @return array
      * @throws \Exception

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Core\Cli;
 
-class ParamsParser
+class CommandParamsParser
 {
     /**
      * @param array $params
