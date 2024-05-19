@@ -6,7 +6,7 @@ namespace Core\Cli;
 
 class CommandList
 {
-    public const CONFIG_FILE = '/core/cli-commands.xml';
+    public const CONFIG_FILE = '/app/etc/cli-commands.xml';
 
     private $commands;
 

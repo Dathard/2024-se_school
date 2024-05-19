@@ -16,7 +16,7 @@ class CreateConfig
     public function execute(array $config)
     {
         if (file_exists(BP . '/app/etc/' . Config::CONFIG_FILE_NAME)) {
-            throw new \Exception("Service already configured.\nPlease check config file " . BP . '/app/etc/' . Config::CONFIG_FILE_NAME);
+            throw new \Exception("Application already configured.\nPlease check config file " . BP . '/app/etc/' . Config::CONFIG_FILE_NAME);
         }
 
         $config = $this->prepareConfig($config);

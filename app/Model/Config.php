@@ -10,9 +10,14 @@ class Config
 
     /**
      * @return array
+     * @throws \Exception
      */
     public function get(): array
     {
+        if (! file_exists(BP . '/app/etc/' . self::CONFIG_FILE_NAME)) {
+            throw new \Exception('Application is not configured. Please run the command: php bin/run install');
+        }
+
         $serviceConfigJson = file_get_contents(BP . '/app/etc/' . self::CONFIG_FILE_NAME);
 
         return json_decode($serviceConfigJson, true);
@@ -20,6 +25,7 @@ class Config
 
     /**
      * @return array
+     * @throws \Exception
      */
     public function getDbCredentials(): array
     {

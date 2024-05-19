@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<commands xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Schema/cli-commands.xsd">
+<commands xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../core/Schema/cli-commands.xsd">
     <command name="install" class="Core\Cli\InstallCommand">
         <params>
             <param name="db-host" required="true" description="The database server’s fully qualified hostname or IP address."/>
