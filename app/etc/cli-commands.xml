@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<commands xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../core/Schema/cli-commands.xsd">
+    <command name="install" class="Core\Cli\InstallCommand">
+        <params>
+            <param name="db-host" required="true" description="The database server’s fully qualified hostname or IP address."/>
+            <param name="db-name" required="true" description="Name of the database instance in which you want to install the database tables."/>
+            <param name="db-user" required="true" description="Username of the database instance owner."/>
+            <param name="db-password" required="true" description="Database instance owner’s password."/>
+        </params>
+    </command>
+    <command name="send-email-notifications" class="App\Cli\SendEmailNotificationsCommand"/>
+</commands>

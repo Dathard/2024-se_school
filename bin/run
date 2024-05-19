@@ -1,0 +1,16 @@
+#!/usr/bin/env php
+<?php
+require __DIR__ . '/../app/bootstrap.php';
+
+if ('cli' !== PHP_SAPI) {
+    throw new \Exception('bin/* must be run as a CLI application');
+}
+
+unset($argv[0]);
+
+$objectManager = new \Core\ObjectManager();
+$objectManager->get(\Core\Cli\Runner::class)
+    ->run(
+        array_shift($argv),
+        $argv
+    );
