@@ -21,9 +21,9 @@
 php bin/run install --db-host=localhost --db-name=mydatabase --db-user=myuser --db-password=mypassword
 ```
 
-## Налаштування автоматичної розсилки нотфікейшинів
+## Налаштування автоматичної розсилки листів з актуальним курсом
 
-Для розсилки нотіфікейшинів використовується команда:
+Для розсилки листів використовується команда:
 
 ```sh
 php bin/run send-email-notifications
